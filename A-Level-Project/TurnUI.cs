@@ -12,7 +12,8 @@ namespace BattleOfConsoletopiaFinal
 
         public TurnUI()
         {
-            _windows.Add(new Window(new Rectangle(new Coord(0, 0), 4, 4), ConsoleColor.White, "Window 1"));
+            _windows.Add(new Window(new Rectangle(new Coord(4, 2), 15, 9), ConsoleColor.White, "Window 1"));
+            _windows.Add(new Window(new Rectangle(new Coord(23, 2), 15, 9), ConsoleColor.White, "Window 2"));
 
         }
 
