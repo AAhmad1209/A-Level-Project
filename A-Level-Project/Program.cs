@@ -1,11 +1,10 @@
-﻿namespace A_Level_Project
+﻿namespace BattleOfConsoletopiaFinal
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-            int x = 5;
+            Game game = new Game();
         }
     }
 }
