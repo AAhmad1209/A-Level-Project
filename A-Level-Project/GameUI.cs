@@ -66,7 +66,21 @@ namespace BattleOfConsoletopiaFinal
 
                 //}
 
-                _turn_UI.Display();
+
+                while (true)
+                {
+                    _turn_UI.Display();
+
+                    ConsoleKeyInfo input_key = Console.ReadKey();
+
+                    if (input_key.Key == ConsoleKey.Tab)
+                    {
+                        _turn_UI.Next_Window();
+                    }
+
+                }
+
+                
                 Console.ReadKey();
 
             }

@@ -9,22 +9,21 @@ namespace BattleOfConsoletopiaFinal
     internal class Window
     {
         private Rectangle _rectangle;
-        private ConsoleColor _border_colour;
         private bool _active;
         private string _name;
 
-        public Window(Rectangle rectangle, ConsoleColor border_colour, string name)
+        public Window(Rectangle rectangle, string name)
         {
             _rectangle = rectangle;
-            _border_colour = border_colour;
             Name = name;
         }
 
         public string Name { get => _name; set => _name = value; }
+        public bool Active { get => _active; set => _active = value; }
 
         public void Display_Border()
         {
-            if (_active == true)
+            if (Active == true)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
             }
@@ -163,5 +162,6 @@ namespace BattleOfConsoletopiaFinal
                 }
             }
         }
+
     }
 }
