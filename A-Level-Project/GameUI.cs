@@ -78,6 +78,11 @@ namespace BattleOfConsoletopiaFinal
                         _turn_UI.Next_Window();
                     }
 
+                    else if (input_key.Key == ConsoleKey.DownArrow || input_key.Key == ConsoleKey.UpArrow)
+                    {
+                        _turn_UI.Update_Active_Window(input_key);
+                    }
+
                 }
 
                 
