@@ -72,6 +72,7 @@ namespace BattleOfConsoletopiaFinal
         public void Update_Info(Player current_player)
         {
             _current_player = current_player;
+
         }
 
         public void Next_Window()
@@ -95,9 +96,25 @@ namespace BattleOfConsoletopiaFinal
         public PlayerAction Update_Active_Window(ConsoleKeyInfo key_info)
         {
             PlayerAction action = Current_window.Update(key_info);
-            Display();
+            //Display();
 
             return action;
         }
+
+        public void Reset()
+        {
+            foreach (Window window in _windows)
+            {
+                window.Reset();
+            }
+            
+            _current_window.Active = false;
+            _current_window_pointer = 0;
+
+            _current_window = _windows[_current_window_pointer];
+            _current_window.Active = true;
+        }
     }
+
+    
 }

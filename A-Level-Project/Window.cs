@@ -188,6 +188,11 @@ namespace BattleOfConsoletopiaFinal
             return null;
         }
 
+        public virtual void Reset()
+        {
+            
+        }
+
 
     }
     internal class InfoWindow : Window
@@ -224,6 +229,11 @@ namespace BattleOfConsoletopiaFinal
             {
                 _selection_list.Add(pair.Value);
             }
+        }
+
+        public override void Reset()
+        {
+            _current_selection_pointer = 0;
         }
 
         public override PlayerAction Update(ConsoleKeyInfo key_press)
@@ -312,11 +322,14 @@ namespace BattleOfConsoletopiaFinal
 
     internal class MapWindow : Window
     {
-        Map _map;
+        private Map _map;
+        private Coord _cursor;
 
         public MapWindow(Rectangle rectangle, string name, Map map) : base(rectangle, name)
         {
             _map = map;
+
+            _cursor = new Coord(0, 0);
         }
 
         public override void Display_Contents()
@@ -426,15 +439,61 @@ namespace BattleOfConsoletopiaFinal
                 }
                 (int x, int y) current_pos = Console.GetCursorPosition();
                 Console.SetCursorPosition(_internal_x, current_pos.y + 1);
+
+
                 //Console.WriteLine();
 
 
             }
 
-            //Console.SetCursorPosition(_internal_x + _cursor.X, _internal_y + _cursor.Y);
-            //Console.BackgroundColor = ConsoleColor.Blue;
-            //Console.Write(" ");
+            Console.SetCursorPosition(_internal_x + _cursor.X, _internal_y + _cursor.Y);
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.Write(" ");
             Console.ResetColor();
+        }
+
+        public override PlayerAction Update(ConsoleKeyInfo key_press)
+        {
+            if (key_press.Key == ConsoleKey.DownArrow)
+            {
+                _cursor.Y++;
+            }
+            else if (key_press.Key == ConsoleKey.UpArrow)
+            {
+                _cursor.Y--;
+            }
+            else if (key_press.Key == ConsoleKey.LeftArrow)
+            {
+                _cursor.X--;
+            }
+            else if (key_press.Key == ConsoleKey.RightArrow)
+            {
+                _cursor.X++;
+            }
+
+
+            return null;
+        }
+
+        //public bool Cursor_In_Bounds(Coord new_cursor_coord)
+        //{
+        //    Coord map_coord = new Coord(_internal_x - new_cursor_coord.X, _internal_y - new_cursor_coord.Y);
+
+        //    try
+        //    {
+        //        Tile next_tile = _map.GetTile(map_coord.X, map_coord.Y);
+        //        return true;
+        //    }
+
+        //    catch
+        //    {
+        //        return false; 
+        //    }
+        //}
+
+        public override void Reset()
+        {
+            _cursor = new Coord(0, 0);
         }
 
     }

@@ -46,8 +46,7 @@ namespace BattleOfConsoletopiaFinal
         public void Turn_UI_Loop()
         {
             
-            while (true)
-            {
+            
                 //Console.WriteLine("Pick and option. 1) Add unit, 2) view units etc..");
 
                 //string input = Console.ReadLine();
@@ -65,43 +64,60 @@ namespace BattleOfConsoletopiaFinal
                 //    Console.WriteLine(OnPlayerActionValidation?.Invoke(action));
 
                 //}
-                Player current_player = OnCurrentPlayerRequest?.Invoke();
-                _turn_UI.Update_Info(current_player);
+            Player current_player = OnCurrentPlayerRequest?.Invoke();
+            _turn_UI.Update_Info(current_player);
 
-                while (true)
+            while (true)
+            {
+                PlayerAction action = null;
+
+                _turn_UI.Display();
+
+                ConsoleKeyInfo input_key = Console.ReadKey();
+
+                if (input_key.Key == ConsoleKey.Tab)
                 {
-                    PlayerAction action = null;
-
-                    _turn_UI.Display();
-
-                    ConsoleKeyInfo input_key = Console.ReadKey();
-
-                    if (input_key.Key == ConsoleKey.Tab)
-                    {
-                        _turn_UI.Next_Window();
-                    }
-
-                    else if (input_key.Key == ConsoleKey.DownArrow || input_key.Key == ConsoleKey.UpArrow)
-                    {
-                       _turn_UI.Update_Active_Window(input_key);
-                    }
-
-                    else if (input_key.Key == ConsoleKey.Enter)
-                    {
-                        action = _turn_UI.Update_Active_Window(input_key);
-                    }
-
-                    if (OnPlayerActionValidation.Invoke(action))
-                    {
-                        OnPlayerAction?.Invoke(action);
-                    }
-
+                    _turn_UI.Next_Window();
                 }
 
-                
-                Console.ReadKey();
+                else if (input_key.Key == ConsoleKey.DownArrow || input_key.Key == ConsoleKey.UpArrow)
+                {
+                    _turn_UI.Update_Active_Window(input_key);
+                }
 
+                else if (input_key.Key == ConsoleKey.Enter)
+                {
+                    action = _turn_UI.Update_Active_Window(input_key);
+                }
+
+                // messy
+                else
+                {
+                    _turn_UI.Update_Active_Window(input_key);
+                }
+
+                if (OnPlayerActionValidation.Invoke(action))
+                {
+                    OnPlayerAction?.Invoke(action);
+
+                    if (action.Type == "End Turn")
+                    {
+                        current_player = OnCurrentPlayerRequest?.Invoke();
+                        _turn_UI.Update_Info(current_player);
+                        _turn_UI.Reset();
+                        
+                    }
+                }
+
+                //current_player = OnCurrentPlayerRequest?.Invoke();
+                //_turn_UI.Update_Info(current_player);
+                
             }
+
+                
+            Console.ReadKey();
+
+            
         }
 
 
