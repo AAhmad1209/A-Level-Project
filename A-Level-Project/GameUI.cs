@@ -65,10 +65,13 @@ namespace BattleOfConsoletopiaFinal
                 //    Console.WriteLine(OnPlayerActionValidation?.Invoke(action));
 
                 //}
-
+                Player current_player = OnCurrentPlayerRequest?.Invoke();
+                _turn_UI.Update_Info(current_player);
 
                 while (true)
                 {
+                    PlayerAction action = null;
+
                     _turn_UI.Display();
 
                     ConsoleKeyInfo input_key = Console.ReadKey();
@@ -80,7 +83,17 @@ namespace BattleOfConsoletopiaFinal
 
                     else if (input_key.Key == ConsoleKey.DownArrow || input_key.Key == ConsoleKey.UpArrow)
                     {
-                        _turn_UI.Update_Active_Window(input_key);
+                       _turn_UI.Update_Active_Window(input_key);
+                    }
+
+                    else if (input_key.Key == ConsoleKey.Enter)
+                    {
+                        action = _turn_UI.Update_Active_Window(input_key);
+                    }
+
+                    if (OnPlayerActionValidation.Invoke(action))
+                    {
+                        OnPlayerAction?.Invoke(action);
                     }
 
                 }

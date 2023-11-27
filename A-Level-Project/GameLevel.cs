@@ -23,6 +23,9 @@ namespace BattleOfConsoletopiaFinal
             _players = players;
 
             Game_Setup(map_path);
+
+            _current_player = _players[0];
+            current_player_pointer = 0;
         }
 
         //this sets up the game level object
@@ -40,7 +43,14 @@ namespace BattleOfConsoletopiaFinal
         //changes current player
         public void Next_Turn()
         {
+            current_player_pointer++;
 
+            if (current_player_pointer == _players.Count)
+            {
+                current_player_pointer = 0;
+            }
+
+            _current_player = _players[current_player_pointer];
         }
 
         //checks if a unit exists on the map
@@ -119,16 +129,22 @@ namespace BattleOfConsoletopiaFinal
         //execute player actions
         public void Execute_Player_Action(PlayerAction action)
         {
-            if (action.Type == "add unit")
+            if (action.Type == "End Turn")
             {
-                Console.WriteLine("ADDED!");
+                Next_Turn();
+                //Console.WriteLine("ADDED!");
             }
         }
 
         //validate player actions
         public bool Validate_Player_Action(PlayerAction action)
         {
-            return false;
+            if (action == null)
+            {
+                return false;
+            }
+
+            return true;
         }
         
         //returns map

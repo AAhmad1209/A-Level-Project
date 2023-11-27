@@ -12,6 +12,7 @@ namespace BattleOfConsoletopiaFinal
         protected int _internal_x;
         protected int _internal_y;
         private bool _active;
+        private bool _activatable;
         private string _name;
         protected WindowData _data;
 
@@ -27,6 +28,7 @@ namespace BattleOfConsoletopiaFinal
         public string Name { get => _name; set => _name = value; }
         public bool Active { get => _active; set => _active = value; }
         internal WindowData Data { get => _data; set => _data = value; }
+        public bool Activatable { get => _activatable; set => _activatable = value; }
 
         public void Display()
         {
@@ -36,6 +38,7 @@ namespace BattleOfConsoletopiaFinal
 
         public void Display_Border()
         {
+            //  && Activatable == true
             if (Active == true)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -180,9 +183,9 @@ namespace BattleOfConsoletopiaFinal
         {
         }
 
-        public virtual void Update(ConsoleKeyInfo key_press)
+        public virtual PlayerAction Update(ConsoleKeyInfo key_press)
         {
-
+            return null;
         }
 
 
@@ -223,7 +226,7 @@ namespace BattleOfConsoletopiaFinal
             }
         }
 
-        public override void Update(ConsoleKeyInfo key_press)
+        public override PlayerAction Update(ConsoleKeyInfo key_press)
         {
             if (key_press.Key == ConsoleKey.DownArrow && _current_selection_pointer < _selection_list.Count - 1)
             {
@@ -244,6 +247,13 @@ namespace BattleOfConsoletopiaFinal
             {
                 Decrement_Selection_Pointer();
             }
+
+            else if (key_press.Key == ConsoleKey.Enter && _selection_list[_current_selection_pointer] == "End Turn")
+            {
+                return new PlayerAction("End Turn");
+            }
+
+            return null;
         }
 
         public override void Display_Contents()
@@ -261,7 +271,10 @@ namespace BattleOfConsoletopiaFinal
                     Console.ForegroundColor = ConsoleColor.Green;
                 }
 
-                Console.WriteLine(@"| {0} |", _selection_list[i]);
+                Console.WriteLine(@"- {0}", _selection_list[i]);
+
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -341,6 +354,12 @@ namespace BattleOfConsoletopiaFinal
                     else if (tile.Type == "sand")
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
+
+                    }
+
+                    else if (tile.Type == "water")
+                    {
+                        Console.BackgroundColor = ConsoleColor.Blue;
 
                     }
 

@@ -65,6 +65,9 @@ namespace BattleOfConsoletopiaFinal
                             case '4':
                                 type = "sand";
                                 break;
+                            case '5':
+                                type = "water";
+                                break;
                             case 'V':
                                 type = "village";
                                 break;
